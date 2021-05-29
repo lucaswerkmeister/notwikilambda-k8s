@@ -1,0 +1,36 @@
+# file based on https://w.wiki/eZB
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: update
+  namespace: tool-notwikilambda
+  labels:
+    name: update
+    # The toolforge=tool label will cause $HOME and other paths to be mounted from Toolforge
+    toolforge: tool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: update
+      toolforge: tool
+  template:
+    metadata:
+      labels:
+        name: update
+        toolforge: tool
+    spec:
+      containers:
+        - name: update
+          image: docker-registry.tools.wmflabs.org/toolforge-php73-sssd-base:latest
+          command: [ "./cron" ]
+          workingDir: /data/project/notwikilambda
+          env:
+            - name: HOME
+              value: /data/project/notwikilambda
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "3072Mi"
+            limits:
+              memory: "3072Mi"

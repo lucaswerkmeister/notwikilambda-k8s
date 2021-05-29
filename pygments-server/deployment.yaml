@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pygments-server
+  namespace: tool-notwikilambda
+  labels:
+    name: pygments-server
+    toolforge: tool
+spec:
+  selector:
+    matchLabels:
+      name: pygments-server
+      toolforge: tool
+  template:
+    metadata:
+      labels:
+        name: pygments-server
+        toolforge: tool
+    spec:
+      containers:
+        - name: pygments-server
+          image: docker-registry.tools.wmflabs.org/toolforge-python37-sssd-web:latest
+          command: [ "../venv/bin/gunicorn", "--workers=4", "--bind=:7879", "app:app" ]
+          ports:
+            - containerPort: 7879
+              name: pygments
+              protocol: TCP
+          workingDir: /data/project/notwikilambda/www/python/src
+          env:
+            - name: HOME
+              value: /data/project/notwikilambda
+          imagePullPolicy: Always
