@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: function-orchestrator
+  namespace: tool-notwikilambda
+  labels:
+    name: function-orchestrator
+    toolforge: tool
+spec:
+  selector:
+    matchLabels:
+      name: function-orchestrator
+      toolforge: tool
+  template:
+    metadata:
+      labels:
+        name: function-orchestrator
+        toolforge: tool
+    spec:
+      containers:
+        - name: function-orchestrator
+          image: docker-registry.tools.wmflabs.org/toolforge-node10-sssd-web:latest
+          command: [ "npm", "start" ]
+          ports:
+            - containerPort: 6254
+              name: pygments
+              protocol: TCP
+          workingDir: /data/project/notwikilambda/www/js/function-orchestrator
+          env:
+            - name: HOME
+              value: /data/project/notwikilambda
+          imagePullPolicy: Always
