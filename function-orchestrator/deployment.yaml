@@ -20,7 +20,18 @@ spec:
       containers:
         - name: function-orchestrator
           image: docker-registry.tools.wmflabs.org/toolforge-node10-sssd-web:latest
-          command: [ "npm", "start" ]
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              while true; do
+                  git pull
+                  npm ci
+                  timeout 12h npm start
+                  if (($? != 124)); then
+                      break
+                  fi
+              done
           ports:
             - containerPort: 6254
               name: pygments
