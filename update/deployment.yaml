@@ -31,6 +31,8 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "3072Mi"
+              cpu: "200m" # less than the default, to avoid hitting the quota
+              memory: "3072Mi" # more than the default, because needed
             limits:
-              memory: "3072Mi"
+              cpu: "200m" # less than the default, to avoid hitting the quota
+              memory: "3072Mi" # more than the default, because needed

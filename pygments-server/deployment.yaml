@@ -30,3 +30,8 @@ spec:
             - name: HOME
               value: /data/project/notwikilambda
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "100m" # less than the default, to avoid hitting the quota
+            limits:
+              cpu: "100m" # less than the default, to avoid hitting the quota
