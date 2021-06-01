@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: function-evaluator
+  namespace: tool-notwikilambda
+  labels:
+    name: function-evaluator
+spec:
+  selector:
+    matchLabels:
+      name: function-evaluator
+  template:
+    metadata:
+      labels:
+        name: function-evaluator
+    spec:
+      containers:
+        - name: function-evaluator
+          image: docker-registry.tools.wmflabs.org/toolforge-node10-sssd-web:latest
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              while true; do
+                  git pull
+                  # npm ci # keep the overridden kad version (see kad-latest.patch)
+                  timeout 12h npm start
+                  if (($? != 124)); then
+                      break
+                  fi
+              done
+          ports:
+            - containerPort: 6927
+              name: pygments
+              protocol: TCP
+          workingDir: /srv/function-evaluator
+          env:
+            - name: HOME
+              value: /srv/function-evaluator
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "200m" # less than the default, to avoid hitting the quota
+            limits:
+              cpu: "200m" # less than the default, to avoid hitting the quota
+          volumeMounts:
+            - name: src
+              mountPath: '/srv/function-evaluator'
+              # note: do not directly mount over /srv – npm is installed in there!
+      volumes:
+        - name: src
+          hostPath:
+            path: '/data/project/notwikilambda/www/js/function-evaluator'
