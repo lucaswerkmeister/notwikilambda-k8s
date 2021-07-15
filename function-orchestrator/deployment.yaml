@@ -17,6 +17,7 @@ spec:
         name: function-orchestrator
         toolforge: tool
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: function-orchestrator
           image: docker-registry.tools.wmflabs.org/toolforge-node10-sssd-web:latest

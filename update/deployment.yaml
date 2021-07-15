@@ -20,6 +20,7 @@ spec:
         name: update
         toolforge: tool
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: update
           image: docker-registry.tools.wmflabs.org/toolforge-php73-sssd-base:latest
