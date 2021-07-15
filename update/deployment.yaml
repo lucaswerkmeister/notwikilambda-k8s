@@ -19,6 +19,7 @@ spec:
       labels:
         name: update
         toolforge: tool
+        networking: internal
     spec:
       automountServiceAccountToken: false
       containers:

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: network-policy
+  namespace: tool-notwikilambda
+  labels:
+    name: network-policy
+spec:
+  podSelector:
+    matchLabels:
+      networking: internal
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: tool-notwikilambda
+    # reject all ingress connections from pods in other namespaces

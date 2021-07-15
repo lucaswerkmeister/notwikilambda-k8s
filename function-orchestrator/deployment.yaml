@@ -16,6 +16,7 @@ spec:
       labels:
         name: function-orchestrator
         toolforge: tool
+        networking: internal
     spec:
       automountServiceAccountToken: false
       containers:

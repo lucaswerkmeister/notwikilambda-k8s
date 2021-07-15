@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         name: function-evaluator
+        networking: internal
     spec:
       automountServiceAccountToken: false
       containers:

@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         name: pygments-server
+        networking: internal
     spec:
       automountServiceAccountToken: false
       containers:
