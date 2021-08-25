@@ -28,7 +28,7 @@ spec:
             - |
               while true; do
                   git pull --recurse-submodules
-                  # npm ci # keep the overridden kad version (see kad-latest.patch)
+                  npm ci
                   timeout 12h npm start
                   if (($? != 124)); then
                       break
