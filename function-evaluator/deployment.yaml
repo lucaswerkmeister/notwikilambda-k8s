@@ -33,7 +33,7 @@ spec:
               done
           ports:
             - containerPort: 6927
-              name: pygments
+              name: evaluator
               protocol: TCP
           workingDir: /srv/function-evaluator
           env:

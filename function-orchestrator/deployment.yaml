@@ -36,7 +36,7 @@ spec:
               done
           ports:
             - containerPort: 6254
-              name: pygments
+              name: orchestrator
               protocol: TCP
           workingDir: /data/project/notwikilambda/www/js/function-orchestrator
           env:
