@@ -6,7 +6,7 @@ metadata:
   labels:
     name: restart
 spec:
-  schedule: "0 0,12 * * *"
+  schedule: "30 9,21 * * *"
   jobTemplate:
     spec:
       template:
