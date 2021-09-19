@@ -23,14 +23,9 @@ spec:
             - "/bin/bash"
             - "-c"
             - |
-              while true; do
-                  git pull --recurse-submodules
-                  npm ci
-                  timeout 12h npm start
-                  if (($? != 124)); then
-                      break
-                  fi
-              done
+              git pull --recurse-submodules
+              npm ci
+              exec npm start
           ports:
             - containerPort: 6927
               name: evaluator
@@ -49,6 +44,13 @@ spec:
             - name: src
               mountPath: '/srv/function-evaluator'
               # note: do not directly mount over /srv – npm is installed in there!
+          startupProbe:
+            httpGet:
+              path: /_info/name
+              port: evaluator
+            failureThreshold: 40
+            periodSeconds: 15
+            # gives the container 15 s * 40 = 10 minutes to update, install and start
       volumes:
         - name: src
           hostPath:

@@ -1,0 +1,34 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: restart
+  namespace: tool-notwikilambda
+  labels:
+    name: restart
+spec:
+  schedule: "0 0,12 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: restart
+            toolforge: tool
+        spec:
+          containers:
+            - name: restart
+              image: docker-registry.tools.wmflabs.org/toolforge-bullseye-sssd:latest
+              command:
+                - /data/project/notwikilambda/bin/kubectl
+                - rollout
+                - restart
+                - deployment
+                - function-evaluator
+                - function-orchestrator
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  cpu: "50m" # much less than the default, to avoid hitting the quota
+                limits:
+                  cpu: "50m" # much less than the default, to avoid hitting the quota
+          restartPolicy: Never

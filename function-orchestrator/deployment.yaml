@@ -26,14 +26,9 @@ spec:
             - "/bin/bash"
             - "-c"
             - |
-              while true; do
-                  git pull --recurse-submodules
-                  npm ci
-                  timeout 12h npm start
-                  if (($? != 124)); then
-                      break
-                  fi
-              done
+              git pull --recurse-submodules
+              npm ci
+              exec npm start
           ports:
             - containerPort: 6254
               name: orchestrator
@@ -48,3 +43,10 @@ spec:
               cpu: "200m" # less than the default, to avoid hitting the quota
             limits:
               cpu: "200m" # less than the default, to avoid hitting the quota
+          startupProbe:
+            httpGet:
+              path: /_info/name
+              port: orchestrator
+            failureThreshold: 40
+            periodSeconds: 15
+            # gives the container 15 s * 40 = 10 minutes to update, install and start
