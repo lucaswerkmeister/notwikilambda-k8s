@@ -7,6 +7,7 @@ metadata:
     name: restart
 spec:
   schedule: "30 9,21 * * *"
+  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
