@@ -27,7 +27,7 @@ spec:
             - "-c"
             - |
               git pull --recurse-submodules
-              npm ci
+              npm install
               exec npm start
           ports:
             - containerPort: 6254
