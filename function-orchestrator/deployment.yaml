@@ -21,7 +21,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: function-orchestrator
-          image: docker-registry.tools.wmflabs.org/toolforge-node10-sssd-web:latest
+          image: docker-registry.tools.wmflabs.org/toolforge-node12-sssd-web:latest
           command:
             - "/bin/bash"
             - "-c"
