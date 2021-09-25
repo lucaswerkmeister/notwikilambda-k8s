@@ -18,7 +18,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: function-evaluator
-          image: docker-registry.tools.wmflabs.org/toolforge-node12-sssd-web:latest
+          image: docker-registry.tools.wmflabs.org/toolforge-node12-sssd-base:latest
           command:
             - "/bin/bash"
             - "-c"
