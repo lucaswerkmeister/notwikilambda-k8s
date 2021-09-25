@@ -18,7 +18,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: pygments-server
-          image: docker-registry.tools.wmflabs.org/toolforge-python37-sssd-web:latest
+          image: docker-registry.tools.wmflabs.org/toolforge-python37-sssd-base:latest
           command: [ "../venv/bin/gunicorn", "--workers=4", "--bind=:7879", "app:app" ]
           ports:
             - containerPort: 7879
