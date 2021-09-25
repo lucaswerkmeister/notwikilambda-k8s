@@ -47,9 +47,9 @@ spec:
             httpGet:
               path: /_info/name
               port: evaluator
-            failureThreshold: 40
-            periodSeconds: 15
-            # gives the container 15 s * 40 = 10 minutes to update, install and start
+            failureThreshold: 120
+            periodSeconds: 5
+            # gives the container 5 s * 120 = 10 minutes to update, install and start
       volumes:
         - name: src
           hostPath:
