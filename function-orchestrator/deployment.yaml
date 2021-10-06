@@ -5,17 +5,14 @@ metadata:
   namespace: tool-notwikilambda
   labels:
     name: function-orchestrator
-    toolforge: tool
 spec:
   selector:
     matchLabels:
       name: function-orchestrator
-      toolforge: tool
   template:
     metadata:
       labels:
         name: function-orchestrator
-        toolforge: tool
         networking: internal
     spec:
       automountServiceAccountToken: false
@@ -33,16 +30,19 @@ spec:
             - containerPort: 6254
               name: orchestrator
               protocol: TCP
-          workingDir: /data/project/notwikilambda/www/js/function-orchestrator
+          workingDir: /srv/function-orchestrator
           env:
             - name: HOME
-              value: /data/project/notwikilambda
+              value: /srv/function-orchestrator
           imagePullPolicy: Always
           resources:
             requests:
               cpu: "200m" # less than the default, to avoid hitting the quota
             limits:
               cpu: "200m" # less than the default, to avoid hitting the quota
+          volumeMounts:
+            - name: src
+              mountPath: '/srv/function-orchestrator'
           startupProbe:
             httpGet:
               path: /_info/name
@@ -50,3 +50,7 @@ spec:
             failureThreshold: 120
             periodSeconds: 5
             # gives the container 5 s * 120 = 10 minutes to update, install and start
+      volumes:
+        - name: src
+          hostPath:
+            path: '/data/project/notwikilambda/www/js/function-orchestrator'
