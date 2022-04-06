@@ -48,8 +48,8 @@ spec:
               path: /_info/name
               port: evaluator
             failureThreshold: 120
-            periodSeconds: 5
-            # gives the container 5 s * 120 = 10 minutes to update, install and start
+            periodSeconds: 10
+            # gives the container 10 s * 120 = 20 minutes to update, install and start
       volumes:
         - name: src
           hostPath:
