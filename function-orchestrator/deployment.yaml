@@ -16,6 +16,8 @@ spec:
         networking: internal
     spec:
       automountServiceAccountToken: false
+      nodeSelector:
+        toolforge.org/nfs-mounted: 'true'
       containers:
         - name: function-orchestrator
           image: docker-registry.tools.wmflabs.org/toolforge-node12-sssd-base:latest

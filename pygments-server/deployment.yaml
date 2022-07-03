@@ -16,6 +16,8 @@ spec:
         networking: internal
     spec:
       automountServiceAccountToken: false
+      nodeSelector:
+        toolforge.org/nfs-mounted: 'true'
       containers:
         - name: pygments-server
           image: docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest
